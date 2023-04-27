@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+char name(){
+	char *name = "Kim sieun";
+	char *id = "2021053007";
+	printf("----- [%s] [%s] -----\n", name, id);}
+
 typedef struct Node {
 	int key;
 	struct Node* link;
