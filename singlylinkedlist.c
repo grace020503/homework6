@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int student(){
+void Printstudent(){
 	char *name = "Kim sieun";
 	char *id = "2021053007";
 
 	printf("----- [%s] [%s] -----\n", name, id );
-	};
+	}
 
 typedef struct Node {
 	int key;
@@ -33,6 +33,8 @@ void printList(headNode* h); // 연결리스트 출력
 
 int main()
 {
+	Printstudent();
+
 	char command;
 	int key;
 	headNode* headnode=NULL;
