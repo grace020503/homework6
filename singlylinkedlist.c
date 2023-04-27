@@ -1,16 +1,5 @@
-/*
- * singly linked list
- *
- *  Data Structures
- *  School of Computer Science 
- *  at Chungbuk National University
- */
-
-
 #include<stdio.h>
 #include<stdlib.h>
-
-/* �꾩슂�� �ㅻ뜑�뚯씪 異붽� */
 
 typedef struct Node {
 	int key;
@@ -21,21 +10,19 @@ typedef struct Head {
 	struct Node* first;
 }headNode;
 
+headNode* initialize(headNode* h); // 연결리스트 초기화
+int freeList(headNode* h); // 연결리스트 해제
 
-/* �⑥닔 由ъ뒪�� */
-headNode* initialize(headNode* h);
-int freeList(headNode* h);
+int insertFirst(headNode* h, int key); // 앞에서 노드 삽임
+int insertNode(headNode* h, int key); // 오름차순 노드 삽입
+int insertLast(headNode* h, int key); // 뒤에서 노드 삽입
 
-int insertFirst(headNode* h, int key);
-int insertNode(headNode* h, int key);
-int insertLast(headNode* h, int key);
+int deleteFirst(headNode* h); // 앞에서 노드 삭제
+int deleteNode(headNode* h, int key); // 선택 노드 삭제
+int deleteLast(headNode* h); // 뒤애서 노드 삭제
+int invertList(headNode* h); // 연결리스트 앞뒤 교체
 
-int deleteFirst(headNode* h);
-int deleteNode(headNode* h, int key);
-int deleteLast(headNode* h);
-int invertList(headNode* h);
-
-void printList(headNode* h);
+void printList(headNode* h); // 연결리스트 출력
 
 int main()
 {
@@ -59,42 +46,42 @@ int main()
 
 		switch(command) {
 		case 'z': case 'Z':
-			headnode = initialize(headnode);
+			headnode = initialize(headnode); // 리스트 초기화
 			break;
 		case 'p': case 'P':
-			printList(headnode);
+			printList(headnode); // 연결리스트 출력
 			break;
 		case 'i': case 'I':
 			printf("Your Key = ");
 			scanf("%d", &key);
-			insertNode(headnode, key);
+			insertNode(headnode, key); // 오름차순 노드 삽입
 			break;
 		case 'd': case 'D':
 			printf("Your Key = ");
 			scanf("%d", &key);
-			deleteNode(headnode, key);
+			deleteNode(headnode, key); // 선택 노드 삭제
 			break;
 		case 'n': case 'N':
 			printf("Your Key = ");
 			scanf("%d", &key);
-			insertLast(headnode, key);
+			insertLast(headnode, key); // 뒤에서 노드 삽입
 			break;
 		case 'e': case 'E':
-			deleteLast(headnode);
+			deleteLast(headnode); // 뒤에서 노드 삭제
 			break;
 		case 'f': case 'F':
 			printf("Your Key = ");
 			scanf("%d", &key);
-			insertFirst(headnode, key);
+			insertFirst(headnode, key); // 앞에서 노드 삽입
 			break;
 		case 't': case 'T':
-			deleteFirst(headnode);
+			deleteFirst(headnode); // 앞에서 노드 삭제
 			break;
 		case 'r': case 'R':
-			invertList(headnode);
+			invertList(headnode); // 연결리스트 앞뒤 교차
 			break;
 		case 'q': case 'Q':
-			freeList(headnode);
+			freeList(headnode); // 리스트 해제
 			break;
 		default:
 			printf("\n       >>>>>   Concentration!!   <<<<<     \n");
@@ -106,22 +93,19 @@ int main()
 	return 1;
 }
 
+// 연결리스트의 첫번쩨 노드를 가르키는 포인터
 headNode* initialize(headNode* h) {
 
-	/* headNode媛� NULL�� �꾨땲硫�, freeNode瑜� �몄텧�섏뿬 �좊떦�� 硫붾え由� 紐⑤몢 �댁젣 */
 	if(h != NULL)
-		freeList(h);
+		freeList(h); // headnode를 초기화하고, 빈 연결 리스트 생성
 
-	/* headNode�� ���� 硫붾え由щ� �좊떦�섏뿬 由ы꽩 */
 	headNode* temp = (headNode*)malloc(sizeof(headNode));
 	temp->first = NULL;
 	return temp;
 }
 
+// 동적 할당 메모리 해제
 int freeList(headNode* h){
-	/* h�� �곌껐�� listNode 硫붾え由� �댁젣
-	 * headNode�� �댁젣�섏뼱�� ��.
-	 */
 	listNode* p = h->first;
 
 	listNode* prev = NULL;
@@ -134,8 +118,7 @@ int freeList(headNode* h){
 	return 0;
 }
 
-
-/* 由ъ뒪�몃� 寃��됲븯��, �낅젰諛쏆� key蹂대떎 �곌컪�� �섏삤�� �몃뱶 諛붾줈 �욎뿉 �쎌엯 */
+// 연결리스트에서 key값 위치에 노드 삽입
 int insertNode(headNode* h, int key) {
 
 	listNode* node = (listNode*)malloc(sizeof(listNode));
@@ -151,14 +134,12 @@ int insertNode(headNode* h, int key) {
 	listNode* n = h->first;
 	listNode* trail = h->first;
 
-	/* key瑜� 湲곗��쇰줈 �쎌엯�� �꾩튂瑜� 李얜뒗�� */
 	while(n != NULL) {
 		if(n->key >= key) {
-			/* 泥� �몃뱶 �욎そ�� �쎌엯�댁빞�� 寃쎌슦 �몄� 寃��� */
 			if(n == h->first) {
 				h->first = node;
 				node->link = n;
-			} else { /* 以묎컙�닿굅�� 留덉�留됱씤 寃쎌슦 */
+			} else {
 				node->link = n;
 				trail->link = node;
 			}
@@ -169,14 +150,11 @@ int insertNode(headNode* h, int key) {
 		n = n->link;
 	}
 
-	/* 留덉�留� �몃뱶源뚯� 李얠� 紐삵븳 寃쎌슦 , 留덉�留됱뿉 �쎌엯 */
 	trail->link = node;
 	return 0;
 }
 
-/**
- * list�� key�� ���� �몃뱶�섎굹瑜� 異붽�
- */
+// 연결리스트의 마지막 노드 삽입
 int insertLast(headNode* h, int key) {
 
 	listNode* node = (listNode*)malloc(sizeof(listNode));
@@ -197,9 +175,7 @@ int insertLast(headNode* h, int key) {
 	return 0;
 }
 
-/**
- * list 泥섏쓬�� key�� ���� �몃뱶�섎굹瑜� 異붽�
- */
+// 연결리스트의 첫번째 노드 삽입
 int insertFirst(headNode* h, int key) {
 
 	listNode* node = (listNode*)malloc(sizeof(listNode));
@@ -211,9 +187,7 @@ int insertFirst(headNode* h, int key) {
 	return 0;
 }
 
-/**
- * list�먯꽌 key�� ���� �몃뱶 ��젣
- */
+// key값의 노드 삭제
 int deleteNode(headNode* h, int key) {
 
 	if (h->first == NULL)
@@ -225,13 +199,11 @@ int deleteNode(headNode* h, int key) {
 	listNode* n = h->first;
 	listNode* trail = NULL;
 
-	/* key瑜� 湲곗��쇰줈 �쎌엯�� �꾩튂瑜� 李얜뒗�� */
 	while(n != NULL) {
 		if(n->key == key) {
-			/* 泥� �몃뱶 �욎そ�� �쎌엯�댁빞�� 寃쎌슦 �몄� 寃��� */
 			if(n == h->first) {
 				h->first = n->link;
-			} else { /* 以묎컙�� 寃쎌슦嫄곕굹 留덉�留됱씤 寃쎌슦 */
+			} else {
 				trail->link = n->link;
 			}
 			free(n);
@@ -242,15 +214,12 @@ int deleteNode(headNode* h, int key) {
 		n = n->link;
 	}
 
-	/* 李얠� 紐� �쒓꼍�� */
 	printf("cannot find the node for key = %d\n", key);
 	return 0;
 
 }
 
-/**
- * list�� 留덉�留� �몃뱶 ��젣
- */
+// 연결리스트의 마지막 노드 삭제
 int deleteLast(headNode* h) {
 
 	if (h->first == NULL)
@@ -262,28 +231,24 @@ int deleteLast(headNode* h) {
 	listNode* n = h->first;
 	listNode* trail = NULL;
 
-	/* �몃뱶媛� �섎굹留� �덈뒗 寃쎌슦, 利� first node == last node��  寃쎌슦 泥섎━ */
 	if(n->link == NULL) {
 		h->first = NULL;
 		free(n);
 		return 0;
 	}
 
-	/* 留덉�留� �몃뱶源뚯� �대룞 */
 	while(n->link != NULL) {
 		trail = n;
 		n = n->link;
 	}
 
-	/* n�� ��젣�섎�濡�, �댁쟾 �몃뱶�� 留곹겕 NULL 泥섎━ */
 	trail->link = NULL;
 	free(n);
 
 	return 0;
 }
-/**
- * list�� 泥ル쾲吏� �몃뱶 ��젣
- */
+
+// 연결리스트의 첫번째 노드 삭제
 int deleteFirst(headNode* h) {
 
 	if (h->first == NULL)
@@ -299,10 +264,7 @@ int deleteFirst(headNode* h) {
 	return 0;
 }
 
-
-/**
- * 由ъ뒪�몄쓽 留곹겕瑜� ��닚�쇰줈 �� 諛곗튂
- */
+// 연결리스트를 역순으로 뒤집음
 int invertList(headNode* h) {
 
 
@@ -326,7 +288,7 @@ int invertList(headNode* h) {
 	return 0;
 }
 
-
+// 연결리스트 출력
 void printList(headNode* h) {
 	int i = 0;
 	listNode* p;
@@ -348,4 +310,3 @@ void printList(headNode* h) {
 
 	printf("  items = %d\n", i);
 }
-
